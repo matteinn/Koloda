@@ -271,6 +271,14 @@ public class DraggableCardView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    public override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard let panGestureRecognizer = gestureRecognizer as? UIPanGestureRecognizer else {
+            return super.gestureRecognizerShouldBegin(gestureRecognizer)
+        }
+        let velocity = panGestureRecognizer.velocity(in: self)
+        return abs(velocity.y) <= abs(velocity.x)
+    }
+    
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if let touchView = touch.view, let _ = touchView as? UIControl {
             return false
